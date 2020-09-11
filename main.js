@@ -1,11 +1,12 @@
+const main = document.getElementById('main')
+const tittle = document.createElement('h1')
+const divImg = document.createElement('div')
+const divBtn = document.createElement('div')
 window.onload = function() {
-    const tittle = document.createElement('h1')
-    const divImg = document.createElement('div')
-    const divBtn = document.createElement('div')
     tittle.innerText = 'sign lenguaje'
-    document.body.appendChild(tittle)
-    document.body.appendChild(divImg)
-    document.body.appendChild(divBtn)
+    this.main.appendChild(tittle)
+    this.main.appendChild(divImg)
+    this.main.appendChild(divBtn)
 }
 const url = 'https://dwaapi.juvasquez88.vercel.app/letters'
 const http = new XMLHttpRequest()
@@ -14,15 +15,21 @@ http.open("GET", url)
 http.responseType='json'
 http.send()
 http.onload = function() {
-    const letters = http.response;
-    showBtn(letters);
+    const letters = http.response
+    showBtn(letters)
   }
 function showBtn(jsonObj){
-    const letters = jsonObj['letters'];
+    const letras = jsonObj['letters']
 
-    for (var i = 0; i < letters.length; i++) {
+    for (var i = 0; i < letras.length; i++) {
         const btn = document.createElement('button')
-        btn.textContent = letters[i].letter
+        btn.setAttribute('onclick','postImg('+letras[i].image+')');
+        btn.textContent = letras[i].letter
         divBtn.appendChild(btn)
     }
+}
+function postImg(url) {
+    const img = document.createElement('img')
+    img.setAttribute('src',url)
+    divImg.appendChild(img)
 }
